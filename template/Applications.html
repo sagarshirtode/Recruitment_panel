@@ -1,0 +1,60 @@
+{% extends 'jobseekerhome.html' %}
+
+{% block containt %}
+  
+  <style>
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 100px;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+  </style>
+  
+  <h1>Post table</h1>
+  <table id="customers">
+      
+    <tr>
+      <th>POST</th>
+      <th>VACANCIES</th>
+      <th>DESCRIPTION</th>
+      <th>MIN SAL</th>
+      <th>MAX SAL</th>
+      <TH>QUALIFICATIONS</TH>
+      <td></td>
+    </tr>
+    
+
+    {% for x in post %}
+    <tr>
+      <td>{{x.post_name}}</td>
+      <td>{{x.vacancies}}</td>
+      <td>{{x.post_description}}</td>
+      <td>{{x.min_salary}}</td>
+      <td>{{x.max_salary}}</td>
+      <td>{{x.qualification}}</td>
+      <td><a href="newapplication">{{x.id}}</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

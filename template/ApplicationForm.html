@@ -1,0 +1,129 @@
+{% extends 'adminHome.html' %}
+
+{% block containt %}
+{% load static %}
+<style>
+    .mainForm{
+        /* background-color: whitesmoke; */
+        /* background-image: url('{% static 'img/hondalogo.png'})'; */
+        border-radius: 5px;
+        box-sizing: border-box;
+        border: 2px solid black;
+        height: auto;
+    }
+    .headdiv{
+            display: flex;
+            justify-content: space-around;
+    }
+    img{
+        border-radius: 10px;
+    }
+    .endblock{
+        display: flex;
+        flex-direction: column;
+        /* justify-content: left; */
+        align-items: flex-end;
+    }
+</style>
+<br>
+<div class="container text-center" style="background-color: bisque;">
+    <h1 class="text-center">Application oF</h1>
+    <h1 class="text-center">{{p_d.first_name}} {{p_d.middle_name}} {{p_d.last_name}}</h1>
+    <h1 class="text-center">For the post</h1>
+    <h1 class="text-center">{{h_d.post_name}}</h1>
+    <button class="btn bg-success" onclick="window.print()">Print</button>
+</div>
+<br>
+    <div class="container mainForm">
+        <div class="row">
+           <div class="col-sm-12"> <p class="text-center">DET 2019-20/MTS ADVERTISEMENT</p></div>
+        </div>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="row">
+          <div class="col-sm-12 headdiv">
+            <img class="navbar-brand" src="{% static 'img/hondalogo.png' %}" alt="Areo Honda" width="120" height="60px">
+            <button class="btn btn-primary">DET 2019-20/MTS ADVERTISEMENT</button>
+            <img class="navbar-brand" src="{% static 'img/hondalogo.png' %}" alt="Areo Honda" width="120" height="60px"> 
+          </div>
+        </div>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="row">
+            <div class="col-sm-12 text-center"><h4>DET 2019-20/MTS ADVERTISEMENT</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-center"><br></h4></div>
+        </div>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="row">
+            <div class="col-sm-9">
+                <table class="table table-sm table-borderless">
+                 <tr><th><h5>Personal Details /व्यक्तीगत विवरण </h5></th></tr>
+                    <tr><td>Application ID:</td><td>{{p_d.j_id}}</td></tr>
+                    <tr><td>User name:</td><td>{{p_d.userName}}</td></tr>
+                    <tr><td>First Name:</td><td>{{p_d.first_name}}</td></tr>
+                    <tr><td>Middle Name/Father Name:</td><td>{{p_d.middle_name}}</td></tr>
+                    <tr><td>Last Name:</td><td>{{p_d.last_name}}</td></tr>
+                    <tr><td>Gende:</td><td>{{p_d.gender}}</td></tr>
+                    <tr><td>Date of Birth:</td><td>{{p_d.birth_date}}</td></tr>
+                 <tr><th><h5>Address / पात्रचार का पता</h5></th></tr>
+                    <tr><td>state:</td><td>{{p_d.state}}</td></tr>
+                    <tr><td>distric:</td><td>{{p_d.distric}}</td></tr>
+                    <tr><td>tahashil:</td><td>{{p_d.tahashil}}</td></tr>
+                    <tr><td>city:</td><td>{{p_d.city}}</td></tr>
+                    <tr><td>pin:</td><td>{{p_d.pin}}</td></tr>
+                 <tr><th><h5>Contact Details / संपक विवरण</h5></th></tr>
+                    <tr><td>Contact:</td><td>{{p_d.contact}}</td></tr>
+                    <tr><td>email:</td><td>{{c_d.email}}</td></tr>
+                 <tr><th><h5>Educational and Professional Qualification Details / शैिणक और ावसाियक योता का विवरण</h5></th></tr>
+                    <tr><td>branch:</td><td>{{a_d.branch}}</td></tr>
+                    <tr><td>degree:</td><td>{{a_d.degree}}</td></tr>
+                    <tr><td>university:</td><td>{{a_d.university}}</td></tr>
+                    <tr><td>institute:</td><td>{{a_d.institute}}</td></tr>
+                    <tr><td>status:</td><td>{{a_d.status}}</td></tr>
+                    <tr><td>semester:</td><td>{{a_d.semester}}</td></tr>
+                    <tr><td>cpi:</td><td>{{a_d.cpi}}</td></tr>
+                    <tr><td>experience:</td><td>{{a_d.experience}}</td></tr>
+                 <tr><th><h5>Work Experience </h5></th></tr>
+                    <tr><td>month_of_experience:</td><td>{{ex_d.month_of_experience}}</td></tr>
+                    <tr><td>company:</td><td>{{ex_d.company}}</td></tr>
+                    <tr><td>designation:</td><td>{{ex_d.designation}}</td></tr>
+                    <tr><td>job_leaving_reason:</td><td>{{ex_d.job_leaving_reason}}</td></tr>
+                 <tr><th><h5>Uploaded Document Details / अपलोड िकए गए दावेज का विवरण </h5></th></tr>
+
+                 <tr><th><h5>Applied post Information</h5></th></tr>
+                    <tr><td>post_id:</td><td>{{h_d.post_id}}</td></tr>
+                    <tr><td>post_name:</td><td>{{h_d.post_name}}</td></tr>
+                    <tr><td>application_date:</td><td>{{h_d.application_date}}</td></tr>
+                </table>
+            </div>
+            <div class="col-sm-3">
+                <img class="navbar-brand" src="{% static 'img/hondalogo.png' %}" alt="Areo Honda" width="150" height="200px">
+            </div>
+
+        </div>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="row">
+            <div class="col-sm-12">
+                Declaration / घोषणा:<br>
+I hereby declare that all the statements made in this application are True, Complete and Correct to the best of my knowledge and belief. I
+understand that in the event of any information being found untrue or incorrect at any stage or I am not satisfying any of the eligibility criteria
+stipulated, and also in case of creating influence/undue pressure regarding recruitment shall tantamount to cancellation of my candidature.
+मयह घोिषत करता / करती ं िक इस आवेदन मिदए गए सभी कथन स, पूणऔर मेरेान और िवास के अनुसार सही ह। मसमझता / समझती ं िक िकसी भी
+सूचना को िकसी भी र पर अस या गलत पाए जानेकी थित मया मिनधारत पाता मानदंडोंमसेिकसी को पूरा नहींकर रहा / रही ँ, और भत के संबंध मभाव /
+अनुिचत दबाव बनानेके मामलेमभी मेरी उीदवारी र की जा सकती ह
+            </div>
+        </div>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="row">
+            <div class="col-sm-9"></div>
+            <div class="col-sm-3 endblock">
+                    <div><img class="navbar-brand" src="{% static 'img/hondalogo.png' %}" alt="Areo Honda" width="200" height="100px"></div>
+                    <div>Signature of Applicant / आवेदक के हार</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">Final Submission Date / अंितम जमा ितिथ: </div>
+        </div>
+    </div>
+    
+{% endblock %}

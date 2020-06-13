@@ -1,0 +1,84 @@
+{% extends 'jobseekerhome.html' %}
+
+{% block containt %}
+
+<style>
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 100px;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .main{
+    display: flex;
+    justify-content: start;
+  }
+  </style>
+  
+  <h1 class="text-center">Openings are here.</h1>
+  <table id="customers">
+      
+    <tr>
+      <th>POST</th>
+      <th>VACANCIES</th>
+      <th>DESCRIPTION</th>
+      <th>MIN SAL</th>
+      <th>MAX SAL</th>
+      <TH>QUALIFICATIONS</TH>
+      <th>APPLY</th>
+      
+    </tr>
+     
+
+    {% for x in post %}
+    <tr>
+      <td>{{x.post_name}}</td>
+      <td>{{x.vacancies}}</td>
+      <td>{{x.post_description}}</td>
+      <td>{{x.min_salary}}</td>
+      <td>{{x.max_salary}}</td>
+      <td>{{x.qualification}}</td>
+      <td><a href="http://127.0.0.1:8000/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+    </tr>
+    {% endfor %}
+
+    
+
+    </table> 
+<!-- 
+     {% for x in post %} 
+    <div class="card" style="width: 18rem;margin-left: 35%;">
+      <div class="card-body">
+        <h5 class="card-title bg-light text-center">{{x.post_name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{x.vacancies}}</h6>
+        <p class="card-text">{{x.post_description}}</p>
+        <a href="#" class="card-link">{{x.min_salary}}</a>
+        <a href="#" class="card-link">{{x.qualification}}</a>
+      </div>
+    </div> <br>
+    {% endfor %} -->
+  
+    
+    
+{% endblock %}

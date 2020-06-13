@@ -1,0 +1,125 @@
+{% extends 'adminHome.html' %}
+
+{% block containt %}
+
+{% load static %}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <link rel="stylesheet" href="{% static 'css/jobseekerhome.css'%} "> -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css" rel="stylesheet">
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/js/mdb.min.js"></script>
+
+<style>
+  .main1{
+    background-color: tan;
+    display: flex;
+    justify-content: stretch;
+    height: auto;
+    width: 95%px;
+  }
+  .sub1,h1{
+    border-bottom: 5px;
+    background-color: azure;
+    display: flex;
+    justify-content: stretch;
+    height: auto;
+    width: 100%;
+  }
+  .card{
+    display: flex;
+    justify-content: space-around;
+  }
+</style>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+</div>
+
+<div class="row">
+            <!-- Applications -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Applications</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">40</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-2x text-gray-300">&#128195;</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INTERVIEWS -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">INTERVIEWS</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">14</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-2x text-gray-300">&#9990;</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- HIRED -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">HIRED</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">63</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-2x text-gray-300">&#129309;</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+
+<!-- Project Card Example -->
+<div class="col-lg-6 mb-4">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Current Interviews Progress level</h6>
+    </div>
+    <div class="card-body">
+      <h4 class="small font-weight-bold">Application No: <span class="float-right">80%</span></h4>
+      <div class="progress mb-4">
+        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{% endblock %}

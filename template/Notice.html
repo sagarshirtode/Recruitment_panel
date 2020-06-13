@@ -1,0 +1,59 @@
+{% extends 'jobseekerhome.html' %}
+{% block containt %}
+{% load static %}
+
+<style>
+    .container{
+        background-color:gray;
+        border-radius: 5px;
+    }
+
+    .container1{
+        background-color: green;
+    }
+    .container2{
+        background-color: wheat;
+    }
+</style>
+<div class="container my-4">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="text-center">Notice</h1>
+            <div class="card">
+                <div class="card-header">Notice</div>
+                <div class="card-body">
+                  {% for i in apl3 %}
+                  <h5 class="card-title">{{i.notice_head}}</h5><span>{{i.ndate}}</span>
+                  <p class="card-text">🌫{{i.notice_data}}</p>
+                  {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="col-sm-6">
+            <h1 class="text-center">Schedule</h1>
+            <div class="card">
+                <div class="card-header">Schedule</div>
+                <div class="card-body">
+                  <h5 class="card-title">Administrator Authorized</h5>
+                  <table class="table border table-sm">
+                    <tr>
+                        <th>Post</th>
+                        <th>Start Date</th>
+                        <th>End Date</>
+                      </tr>
+                      {% for j in apl2 %}
+                    <tr>
+                      <td>{{j.post}}</td>
+                      <td>{{j.startDate}}</td>
+                      <td>{{j.endDate}}</td>
+                    </tr>
+                    {% endfor %}              
+                  </table>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

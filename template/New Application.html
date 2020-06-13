@@ -1,0 +1,274 @@
+{% extends 'jobseekerhome.html' %}
+
+{% block containt %}
+
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+ <!-- Google Fonts -->
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+ <!-- Bootstrap core CSS -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+ <!-- Material Design Bootstrap -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/css/mdb.min.css" rel="stylesheet">
+ <link  href="{% static 'js/newjs.js' %}" type ="javascript"/>
+ <!-- <link href="{% static 'js/newjs.js' %}"> -->
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+<div class="container pt-5">
+<form action="http://127.0.0.1:8000/createApplication" method="post" enctype="multipart/form-data" onload="onMe()">{%csrf_token%}
+<table class="table pt-2 table-responsive-xl table-bordered">
+    
+   <thead class="thead-light">
+      <tr>
+         <th colspan="2"><h4>Personal Details:</h4></th>
+      </tr> 
+   </thead>
+      <tr>
+      <td> Application ID:</td>
+        <td><input type="text" class="form-control-sm" name="jId" id="jid" placeholder="Application ID" value="" disabled></td> 
+     </tr>
+     <tr>
+        <td>First Name:</td> 
+        <td><input type="text" class="form-control-sm" name="fName" placeholder="First Name" ></td>
+     </tr>
+     <tr>
+         <td> Middle Name:</td>
+        <td><input type="text" class="form-control-sm" name="mName" placeholder="Middle Name" ></td> 
+     </tr>
+     <tr>
+        <td>Last Name:</td> 
+        <td><input type="text" class="form-control-sm" name="lName" placeholder="Last Name" ></td>
+     </tr>
+     <tr>
+      <td>Contact:</td> 
+      <td><input type="text" class="form-control-sm" name="contact" placeholder="Mobile Number" ></td>
+   </tr>
+     <tr>
+         <td>Gender:</td>
+        <td><select class="form-control-sm" name="gender" id="exampleFormControlSelect1">
+         <option>Male</option>
+         <option>Female</option>
+         <option>Other</option>
+       </select></td> 
+     </tr>
+     <tr>
+        <td>Date O Birth:</td> 
+        <td><input type="date"  class="form-control-sm" name="dob" onchange="mydob()" placeholder="dob" ></td>
+     </tr>
+     <tr>
+        <td> State:</td> 
+        <td><input type="text" class="form-control-sm" name="state" placeholder="State" ></td>
+     </tr>
+     <tr>
+      <td>Distric:</td> 
+      <td><input type="text" class="form-control-sm" name="jilha" placeholder="Distric"></td>
+   </tr>
+     <tr>
+         <td>Tahashil:</td> 
+         <td><input type="text" class="form-control-sm" name="tahashil" placeholder="Tahashil"></td>
+      </tr>
+      <tr>
+         <td> City:</td>
+        <td><input type="text" class="form-control-sm" name="city" placeholder="City" ></td> 
+     </tr>
+     <tr>
+         <td>Pin:</td> 
+         <td><input type="text" class="form-control-sm" name="pin" placeholder="Pin" ></td>
+      </tr>
+
+<thead class="thead-light">
+   <tr>
+      <th colspan="2"><h4>Education Details:</h4></th>
+   </tr> 
+</thead>
+   <tr>
+      <td>Branch:</td>
+     <td><select class="form-control-sm" id="exampleFormControlSelect1" name="branch">
+      <option>Science</option>
+      <option>Art</option>
+      <option>commerce</option>
+      <option>management</option>
+      <option>technology</option>
+    </select></td> 
+  </tr>
+  <td>Degree:</td>
+     <td><select class="form-control-sm" id="exampleFormControlSelect1" name="degree">
+      <option>ssc</option>
+      <option>hsc</option>
+      <option>UG</option>
+      <option>PG</option>
+      <option>Doploma</option>
+    </select></td> 
+  </tr>
+  <td>University/Board:</td>
+     <td><select class="form-control-sm" id="exampleFormControlSelect1" name="uni">
+      <option>Oxford</option>
+      <option>Rahuri</option>
+      <option>solapur</option>
+      <option>pune</option>
+      <option>Other</option>
+    </select></td
+  </tr>
+  <tr>
+   <td>Institute:</td> 
+   <td><input type="text" class="form-control-sm" name="institute" placeholder="Institute"></td>
+</tr>
+<tr>
+  <td>Status:</td>
+     <td><select class="form-control-sm" id="exampleFormControlSelect1" name="status">
+      <option>pass</option>
+      <option>pursuing</option>
+    </select></td> 
+  </tr>
+
+  <tr>
+   <td>Semester:</td> 
+   <td><input type="text" class="form-control-sm" name="sem" placeholder="SEM/e.g:1,2,3" ></td>
+</tr>
+
+  <tr>
+   <td>CPI:</td> 
+   <td><input type="text" class="form-control-sm" name="CPI_Percentages" placeholder="CPI/e.g:A,B,C,D" ></td>
+</tr>
+<tr>
+<td>Experience:</td>
+<td><select class="form-control-sm" id="experience" name="experience" onchange="select()">
+   <option>Select</option>
+   <option>Yes</option>
+ <option>No</option>
+</select></td> 
+</tr>
+
+<thead class="thead-light" id="expehead">
+   <tr>
+      <th colspan="2"><h4>Experience Details:</h4></th>
+   </tr> 
+</thead>
+<tr>
+   <td>Months Of Experience:</td> 
+   <td><input type="text" class="form-control-sm" id="moe" name="monthsOfExperience" placeholder="Months Of Experience" ></td>
+</tr>
+<tr>
+   <td>Company:</td> 
+   <td><input type="text" class="form-control-sm" name="Company" id="comp" placeholder="Company" ></td>
+</tr>
+<tr>
+   <td>Designation:</td> 
+   <td><input type="text" class="form-control-sm" name="designation" id="desig" placeholder="Designation"></td>
+</tr>
+<tr>
+   <td>Reason to leave previous job:</td> 
+   <td><textarea class="form-control-sm" name="leave" id="roflpj" rows="4" cols="50" placeholder="write reason in max 100 words."></textarea></td>
+</tr>
+<thead class="thead-light">
+   <tr>
+      <th colspan="2"><h4>Documental Details:</h4></th>
+   </tr> 
+</thead>
+   <tr>
+      <td>Aadhar:</td> 
+      <td><input type="file" id="myFile" name="aadharcard"></td>
+   </tr>
+   <tr>
+      <td>photo:</td> 
+      <td><input type="file" id="myFile" name="photo"></td>
+   </tr>
+   <tr>
+      <td>Signature:</td> 
+      <td><input type="file" id="myFile" name="signature"></td>
+   </tr>
+   <tr>
+      <td>Resume:</td> 
+      <td><input type="file" id="myFile" name="resume"></td>
+   </tr>
+   
+<thead class="thead-light">
+   <tr>
+      <th colspan="2"><h4>Apply to post:</h4></th>
+   </tr> 
+</thead>
+<tr>
+   <td>Post ID:</td> 
+   <td><input type="text" class="form-control-sm" name="post_id" placeholder="{{emp.id}}"><p>{{emp.id}}"</p></td>
+</tr>
+<td>Post:</td>
+<td><select class="form-control-sm" id="exampleFormControlSelect1" name="post_name">
+   <!-- <option>menu</option> -->
+{% for x in emp2%}
+<option>{{x.post_name}}</option>
+{% endfor %}
+</select>  <label class="bg-warning">*Please select Applied post name! If select wrong application will be reject. Refer 'POST ID' </label></td> 
+</tr>
+   <tr><td>
+      <input type="checkbox" id="chk">I have read and agree to the terms and conditions
+      <p class="bg-info">The terms and conditions is a legally binding<br> contract between a vendor and its users.
+         <br> It outlines the scope under which the
+         <br> vendor offers the products and services is acceptable.
+         <br>This document is essential in the conduct
+         <br>of business and a vital element of any online presence.</p>
+   </td>
+      <td><button type="submit" id="btn" class="btn btn-primary" disabled>Submit</button></td>
+   </tr>
+ </table>
+ </form>
+</div>
+
+
+<script type="text/javascript">
+   $(function(){
+      $("#chk").change(function(){
+         var st = this.checked;
+         if(st)
+         {
+            $("#btn").prop("disabled", false);
+         }
+         else{
+            $("#btn").prop("disabled", true);
+         }
+
+      });
+   });
+
+   function onMe()
+  {
+
+    document.getElementById("moe").style.disabled;
+    document.getElementById("comp").style.display = "none";
+    document.getElementById("desig").style.display = "none";
+    document.getElementById("roflpj").style.display = "none";
+  }
+
+//   for Experience details
+   function select(){
+    var x = document.getElementById("experience").value;
+     if(x == 'Yes')
+      {
+         
+         document.getElementById("moe").style.display = "block";
+         document.getElementById("comp").style.display = "block";
+         document.getElementById("desig").style.display = "block";
+         document.getElementById("roflpj").style.display = "block";
+      }
+     else{
+         
+         document.getElementById("moe").style.display = "none";
+         document.getElementById("comp").style.display = "none";
+         document.getElementById("desig").style.display = "none";
+          document.getElementById("roflpj").style.display = "none";
+      }
+   }   
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/js/mdb.min.js"></script>
+
+{% endblock %}

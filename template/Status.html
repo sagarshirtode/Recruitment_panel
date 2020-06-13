@@ -1,0 +1,72 @@
+{% extends 'jobseekerhome.html' %}
+
+{% block containt %}
+  
+  <style>
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 100px;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: tan;
+    color: white;
+  }
+
+  .main{
+    display: flex;
+    justify-content: start;
+  }
+  </style>
+  
+  <h1 class="text-center">Application Progress</h1>
+  <table id="customers">
+       <tr>
+      <th>Application ID</th>
+      <th>Level</th>
+      <th>Date</th>
+    </tr>
+     
+
+    {% for x in post %}
+    <tr>
+      <td>{{x.j_id}}</td>
+      <td>{{x.level}}</td>
+      <td>{{x.n_date}}</td>
+    </tr>
+
+    {% endfor %}
+</table> 
+
+    {% for x in post %}
+    
+    <h1>Application ID:{{x.j_id}}</h1>
+  <p>Applicant Name: {{userName}}</p> 
+  <div class="progress" style="height: 40px;">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:{{x.level}}%">
+   {{x.level}} % success
+  </div>
+    Remaining
+  </div>
+  Date:{{x.n_date}}
+</div>
+    {% endfor %}
+   
+{% endblock %}

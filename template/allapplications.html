@@ -1,0 +1,29 @@
+{% extends 'adminHome.html' %}
+{% block containt %}
+
+<div class="container table-responsive border" id="applicationtrack1">
+  <h2 class="text-center">All Applications</h2>
+  <table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+    <tr>
+      <th>Application ID</th>
+      <th>user Name</th>
+      <th>Post</>
+      <th>Date</th>
+      <th>VIEW</th>
+    </tr>
+   </thead>
+    {% for x in post %}
+  <tr>
+    <td>{{x.application_id}}</td>
+    <td>{{x.userName}}</td>
+    <td>{{x.post_name}}</td>
+    <td>{{x.application_date}}</td>
+    <td><a href="http://127.0.0.1:8000/ApplicationForm/{{x.application_id}}" target="_blanck">view Application</a></td>
+  </tr>
+  {% endfor %}
+
+  </table>
+  </div>
+
+{% endblock %}

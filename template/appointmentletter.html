@@ -1,0 +1,34 @@
+{% extends 'adminhome.html' %}
+
+{% block containt %}
+<style>
+    .letter{
+        width: 75%;
+        margin-left: 15%;
+    }
+</style>
+
+<div class="letter">
+<br>
+<h1 class="" style="margin-left: 150px;">Appointment Letter</h1><br>
+TO<br><br>
+{Employee Name}<br><br>
+{Address 1}<br><br>
+{Address 2}<br><br>
+Dear {Employee Name}<br><br>
+I am writing this letter to thank you for considering me appropriate for the job position of<br>
+{Position Name} in Aero Honda sales and services Swargate.I am fortunate enough to get a job offer in your<br>
+company and eager to work and improve with your organization in the coming years.<br><br>
+
+As it was discussed during interview my yearly salary will be {salary} with other allowances. <br>
+There will be a training of {Training Day} days at my joining so that I get to know the work procedure and<br>
+other system operations of the organization.I will be able to join your group on {Jion Date}.<br>
+If any paperwork or personal evaluation is needed to be done before my joining.<br><br>
+I am hopeful to make sincere contribution to your company in future and assure you to work to<br>
+ the best of my capabilities. Thank you once again for showing confidence in me and <br>
+considering me eligible enough for the position.<br><br>
+Yours sincerely,<br><br>
+{HR name}.<br><br>
+<button class="btn bg-success" onclick="window.print()">Print</button>
+</div>
+{% endblock %}

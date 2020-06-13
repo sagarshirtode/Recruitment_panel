@@ -1,0 +1,310 @@
+{% extends 'adminHome.html' %}
+
+{% block containt %}
+  
+<style>
+    .main{
+        display: flex;
+        justify-content: space-around;
+        background-color: #e6e9e7;
+        height: auto;
+        width: 98%;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+    }
+    
+    .main2{
+        margin-top: 10%;
+        position: relative;
+        justify-content: space-around;
+        background-color:#e6e9e7;
+        height: 500px;
+        width: 98%;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        margin-bottom: 3px;
+    }
+    .sub1{
+        position: absolute;
+        height: 500px;
+        width: 100%;
+        background-color:#e6e9e7;
+        border-radius: 5px;
+    }
+
+    #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 98%;
+    margin-top: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 100px;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color:#e6e9e7;
+  }
+</style>
+
+<h1 class="text-center">Generate Report</h1>
+
+<div class="container-fluid reporthead">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="Progress()">Progress</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="Application()">Application</a>
+    </li>
+    <li class="nav-item">
+      <a href="#"  class="nav-link" onclick="Training()">Training</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="Analyasis()">Analyasis</a>
+     </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="Jobseeker_personal_report()">Jobseeker personal report</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link active" onclick="Report_for_call()">Report for call</a>
+    </li>
+  </ul>
+</div>
+
+<div class="container-fluid main2 my-1">
+    <div class="sub1" id="Progress">
+      <h3 class="text-center"><b>Progress</b></h3>
+        <table id="customers">
+            <tr>
+              <th>POST</th>
+              <th>VACANCIES</th>
+              <th>DESCRIPTION</th>
+              <th>MIN SAL</th>
+              <th>MAX SAL</th>
+              <TH>QUALIFICATIONS</TH>
+              <th>APPLY</th>
+            </tr>
+             {% for x in post %}
+            <tr>
+              <td>{{x.post_name}}</td>
+              <td>{{x.vacancies}}</td>
+              <td>{{x.post_description}}</td>
+              <td>{{x.min_salary}}</td>
+              <td>{{x.max_salary}}</td>
+              <td>{{x.qualification}}</td>
+              <td><a href="/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button type="button" class="btn btn-success my-1" onclick="printme()">print</button>
+    </div>
+
+
+    <div class="sub1" id="Application">
+      <h3 class="text-center"><b>Application</b></h3>
+        <table id="customers">
+            <tr>
+              <th>POST</th>
+              <th>VACANCIES</th>
+              <th>DESCRIPTION</th>
+              <th>MIN SAL</th>
+              <th>MAX SAL</th>
+              <TH>QUALIFICATIONS</TH>
+              <th>APPLY</th>
+            </tr>
+             {% for x in post %}
+            <tr>
+              <td>{{x.post_name}}</td>
+              <td>{{x.vacancies}}</td>
+              <td>{{x.post_description}}</td>
+              <td>{{x.min_salary}}</td>
+              <td>{{x.max_salary}}</td>
+              <td>{{x.qualification}}</td>
+              <td><a href="/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button type="button" class="btn  btn-success" onclick="printme()">print</button>
+    </div>
+
+<!-- Training Report -->
+    <div class="sub1" id="Training">
+      <h3 class="text-center"><b>Training</b></h3>
+        <table id="customers">
+            <tr>
+              <th>POST</th>
+              <th>VACANCIES</th>
+              <th>DESCRIPTION</th>
+              <th>MIN SAL</th>
+              <th>MAX SAL</th>
+              <TH>QUALIFICATIONS</TH>
+              <th>APPLY</th>
+            </tr>
+             {% for x in post %}
+            <tr>
+              <td>{{x.post_name}}</td>
+              <td>{{x.vacancies}}</td>
+              <td>{{x.post_description}}</td>
+              <td>{{x.min_salary}}</td>
+              <td>{{x.max_salary}}</td>
+              <td>{{x.qualification}}</td>
+              <td><a href="/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button type="button" class="btn  btn-success" onclick="printme()">print</button>
+    </div>
+
+    <div class="sub1 " id="Analyasis">
+      <h3 class="text-center"><b>Analyasis</b></h3>
+        <table id="customers">
+            <tr>
+              <th>POST</th>
+              <th>VACANCIES</th>
+              <th>DESCRIPTION</th>
+              <th>MIN SAL</th>
+              <th>MAX SAL</th>
+              <TH>QUALIFICATIONS</TH>
+              <th>APPLY</th>
+            </tr>
+             {% for x in post %}
+            <tr>
+              <td>{{x.post_name}}</td>
+              <td>{{x.vacancies}}</td>
+              <td>{{x.post_description}}</td>
+              <td>{{x.min_salary}}</td>
+              <td>{{x.max_salary}}</td>
+              <td>{{x.qualification}}</td>
+              <td><a href="/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button type="button" class="btn  btn-success" onclick="printme()">print</button>
+    </div>
+
+
+    <div class="sub1" id="Jobseeker_personal_report">
+      <h3 class="text-center"><b>Jobseeker personal report</b></h3>
+        <table id="customers">
+            <tr>
+              <th>POST</th>
+              <th>VACANCIES</th>
+              <th>DESCRIPTION</th>
+              <th>MIN SAL</th>
+              <th>MAX SAL</th>
+              <TH>QUALIFICATIONS</TH>
+              <th>APPLY</th>
+            </tr>
+             {% for x in post %}
+            <tr>
+              <td>{{x.post_name}}</td>
+              <td>{{x.vacancies}}</td>
+              <td>{{x.post_description}}</td>
+              <td>{{x.min_salary}}</td>
+              <td>{{x.max_salary}}</td>
+              <td>{{x.qualification}}</td>
+              <td><a href="/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button type="button" class="btn  btn-success" onclick="printme()">print</button>
+    </div>
+
+<!-- Report_for_call -->
+    <div class="sub1" id="Report_for_call">
+       <h3 class="text-center"><b>Call report</b></h3>
+        <table id="customers">
+            <tr>
+              <th>Application ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email ID</th>
+              <th>Mobile Number</th>
+            </tr>
+             {% for x in post %}
+            <tr>
+              <td>{{x.post_name}}</td>
+              <td>{{x.vacancies}}</td>
+              <td>{{x.post_description}}</td>
+              <td>{{x.min_salary}}</td>
+              <td>{{x.max_salary}}</td>
+              <td>{{x.qualification}}</td>
+              <td><a href="/newapplication/{{x.id}}">Apply with ID: {{x.id}}</a></td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button type="button" class="btn  btn-success" onclick="printme()">print</button>
+    </div>
+</div>
+   
+
+
+<script>
+    function Progress(){
+      document.getElementById("Progress").style.display = "block";
+      document.getElementById("Application").style.display = "none";
+      document.getElementById("Training").style.display = "none";
+      document.getElementById("Analyasis").style.display = "none";
+      document.getElementById("Jobseeker_personal_report").style.display = "none";
+      document.getElementById("Report_for_call").style.display = "none";
+    }
+    function Application(){
+      document.getElementById("Progress").style.display = "none";
+      document.getElementById("Application").style.display = "block";
+      document.getElementById("Training").style.display = "none";
+      document.getElementById("Analyasis").style.display = "none";
+      document.getElementById("Jobseeker_personal_report").style.display = "none";
+      document.getElementById("Report_for_call").style.display = "none";
+    }
+    function Training(){
+      document.getElementById("Progress").style.display = "none";
+      document.getElementById("Application").style.display = "none";
+      document.getElementById("Training").style.display = "block";
+      document.getElementById("Analyasis").style.display = "none";
+      document.getElementById("Jobseeker_personal_report").style.display = "none";
+      document.getElementById("Report_for_call").style.display = "none";
+    }
+    function Analyasis(){
+      document.getElementById("Progress").style.display = "none";
+      document.getElementById("Application").style.display = "none";
+      document.getElementById("Training").style.display = "none";
+      document.getElementById("Analyasis").style.display = "block";
+      document.getElementById("Jobseeker_personal_report").style.display = "none";
+      document.getElementById("Report_for_call").style.display = "none";
+    }
+    function Jobseeker_personal_report(){
+      document.getElementById("Progress").style.display = "none";
+      document.getElementById("Application").style.display = "none";
+      document.getElementById("Training").style.display = "none";
+      document.getElementById("Analyasis").style.display = "none";
+      document.getElementById("Jobseeker_personal_report").style.display = "block";
+      document.getElementById("Report_for_call").style.display = "none";
+    }
+    function Report_for_call(){
+      document.getElementById("Progress").style.display = "none";
+      document.getElementById("Application").style.display = "none";
+      document.getElementById("Training").style.display = "none";
+      document.getElementById("Analyasis").style.display = "none";
+      document.getElementById("Jobseeker_personal_report").style.display = "none";
+      document.getElementById("Report_for_call").style.display = "block";
+    }
+    function printme(){
+      window.print();
+    }
+</script>
+{% endblock %}

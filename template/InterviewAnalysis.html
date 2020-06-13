@@ -1,0 +1,398 @@
+{% extends 'adminHome.html' %}
+
+{% block containt %}
+  
+<style>
+    .main{
+        display: flex;
+        justify-content: space-around;
+        background-color: #e6e9e7;
+        height: auto;
+        width: 98%;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+    }
+    
+    .main2{
+        margin-top: 10%;
+        position: relative;
+        justify-content: space-around;
+        background-color:white;
+        height: 600px;
+        width: 98%;
+        overflow: scroll;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        margin-bottom: 3px;
+    }
+    .sub1{
+        position: absolute;
+        height: auto;
+        margin-top: 5px;
+        /* overflow: scroll; */
+        width: 98%;
+        background-color:tan;
+        border-radius: 5px;
+    }
+
+    #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 98%;
+    margin-top: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 100px;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color:#e6e9e7;
+  }
+
+  /* ******************* For Table view only***************  */
+  table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 80%;
+    }
+    
+    td, th {
+      border: 1px solid black;
+      text-align: left;
+      padding: 1px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  .reporthead{
+    height: auto;
+  }
+  .schedulehead{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+  }
+</style>
+
+<!-- <h1 class="text-center">Analise Application</h1> -->
+
+<div class="container-fluid reporthead" onload="applicationtrack()">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="#" class="nav-link " onclick="applicationtrack()">Application Track</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="intschedule()">Interview Schedule</a>
+    </li>
+    <li class="nav-item">
+      <a href="#"  class="nav-link" onclick="skilltest()">Interview/Skill Test</a>
+    </li>
+    <li class="nav-item">
+      <a href="#"  class="nav-link" onclick="doc()">Document Verification</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link" onclick="training()">Training</a>
+     </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link active " onclick="aptletter()">Appointment Letter</a>
+    </li>
+  </ul>
+</div>
+
+<div class="container-fluid main2 my-1">
+<!-- #####################DIV1###################### -->
+  <div class="sub1" id="applicationtrack1">
+    <h2 class="text-center">All Applications</h2>
+    <table class="table-sm">
+      <tr>
+        <th>Application ID</th>
+        <th>user Name</th>
+        <th>Post</>
+        <th>Date</th>
+        <th>VIEW</th>
+      </tr>
+      {% for x in apl %}
+    <tr>
+      <td>{{x.application_id}}</td>
+      <td>{{x.userName}}</td>
+      <td>{{x.post_name}}</td>
+      <td>{{x.application_date}}</td>
+      <td><a href="http://127.0.0.1:8000/ApplicationForm/{{x.application_id}}" target="_blanck">view Application</a></td>
+    </tr>
+    {% endfor %}
+
+    </table>
+  </div>
+<!-- #####################DIV2###################### -->
+  <div class="sub1" id="intschedule1">
+      <div class="container">
+        <div class="schedulehead">
+          <h2>Scedule Interview</h2>
+          <button class="btn bg-danger" onclick="window.location.href = 'scheduleDelete';">Schedule Old Delete</button> 
+      </div>
+        <form class="form" action="schedule" method="POST">{%csrf_token%}
+          <table>
+            <tr>
+              <td>Post:</td>
+              <td> <select class="form-control-sm" name="postName">
+                {% for i in posts %}
+                <option>{{i.post_name}}</option>
+                {% endfor%}
+              </td>
+            </tr>
+             <tr> 
+              <td>Interview Date:</td> 
+              <td><input type="date"  class="form-control-sm" name="idate" ></td>
+            </tr>
+            <tr> 
+              <td>Start Date:</td>
+              <td> <input type="date"  class="form-control-sm" name="sdate" ></td>
+            </tr> 
+            <tr>
+              <td>End Date:</td>
+              <td><input type="date"  class="form-control-sm" name="edate" ></td>
+            </tr>
+            <tr>
+              <td><button type="submit" class="btn bg-success">Submit</button></td>
+              <td></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <table>
+        <tr>
+          <th>Post</th>
+          <th>Start Date</th>
+          <th>End Date</>
+        </tr>
+        {% for j in apl2 %}
+      <tr>
+        <td>{{j.post}}</td>
+        <td>{{j.startDate}}</td>
+        <td>{{j.endDate}}</td>
+      </tr>
+      {% endfor %}
+  
+      </table>
+  </div>
+
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Div3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+  <div class="sub1 table-responsive" id="skilltest1" style="background-color:tan;">
+    <div class="row">
+        <div class="col-sm-12"><h1 class="text-center">Anaylisis points</h1></div>
+    </div>
+    <form class="form" action="insertpoints" method="POST">{%csrf_token%}
+      <table class="table" style="width:60%; height:400px; margin-left: 100px;">
+        <tr>
+          <td>Application ID:</td>
+          <td> <select class="form-control-sm" name="apl_id">
+            {% for i in apl %}
+            <option>{{i.application_id}}</option>
+            {% endfor%}
+          </td><td>points</td>
+        </tr>
+         <tr> 
+          <td>Communication</td> 
+          <td><input type="range" min="1" max="10" name="crange" onchange="mypoint1(this)"></td><td><p id="demo1">10</p></td>
+        </tr>
+        <tr> 
+          <td>Personality:</td>
+          <td> <input type="range" name="prange" max="10" min="0"  onchange="mypoint2(this)"></td><td><p id="demo2">10</p></td>
+        </tr> 
+        <tr>
+          <td>Mentalability:</td>
+          <td><input type="range" name="mrange" max="10" min="0" value="3" onchange="mypoint3(this)"></td><td><p id="demo3">10</p></td>
+        </tr>
+        <tr>
+          <td>Integrity:</td>
+          <td><input type="range" name="irange" max="10" min="0"  onchange="mypoint4(this)"></td><td><p id="demo4">10</p></td>
+        </tr>
+        <tr>
+          <td>job_knowledge:</td>
+          <td><input type="range" name="krange" max="10" min="0"  onchange="mypoint5(this)"></td><td><p id="demo5">10</p></td>
+        </tr>
+        <tr>
+          <td>situational_judgement:</td>
+          <td><input type="range" name="sjrange" max="10" min="0"  onchange="mypoint6(this)"></td><td><p id="demo6">10</p></td>
+        </tr>
+        <tr>
+          <td>t_analysis_point:</td>
+          <td><input type="range" name="tapoint" max="10" min="0" value="7" onchange="mypoint7(this)"></td><td><p id="demo7">10</p></td>
+        </tr>
+        <tr>
+          <td></td><td></td>
+          <td><button type="submit" class="btn btn-sm bg-success">Submit</button></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Document Check\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+  <div class="sub1 " id="doc1">
+   {% for i in docs %}
+      <h1>i.j_id</h1>
+   {% endfor %}
+  </div>
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\training\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+  <div class="sub1 " id="training1">training1
+    <h1>Training</h1>
+  </div>
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\Div5\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+  <div class="sub1" id="aptletter1">
+      <style>
+        .letter{
+            width: 75%;
+            margin-left: 15%;
+        }
+    </style>
+    
+    <div class="letter">
+    <br>
+    <h1 class="" style="margin-left: 150px;">Appointment Letter</h1><br>
+    TO<br><br>
+    {Employee Name}<br><br>
+    {Address 1}<br><br>
+    {Address 2}<br><br>
+    Dear {Employee Name}<br><br>
+    I am writing this letter to thank you for considering me appropriate for the job position of<br>
+    {Position Name} in Aero Honda sales and services Swargate.I am fortunate enough to get a job offer in your<br>
+    company and eager to work and improve with your organization in the coming years.<br><br>
+    
+    As it was discussed during interview my yearly salary will be {salary} with other allowances. <br>
+    There will be a training of {Training Day} days at my joining so that I get to know the work procedure and<br>
+    other system operations of the organization.I will be able to join your group on {Jion Date}.<br>
+    If any paperwork or personal evaluation is needed to be done before my joining.<br><br>
+    I am hopeful to make sincere contribution to your company in future and assure you to work to<br>
+     the best of my capabilities. Thank you once again for showing confidence in me and <br>
+    considering me eligible enough for the position.<br><br>
+    Yours sincerely,<br><br>
+    {HR name}.<br><br>
+    <button class="btn bg-success" onclick="window.print()">Print</button>
+    </div>
+  </div>
+</div>
+   
+
+
+<script>
+    function applicationtrack(){
+      document.getElementById("applicationtrack1").style.display = "block";
+      document.getElementById("intschedule1").style.display = "none";
+      document.getElementById("skilltest1").style.display = "none";
+      document.getElementById("training1").style.display = "none";
+      document.getElementById("aptletter1").style.display = "none";
+      document.getElementById("doc1").style.display = "none";
+    }
+    function intschedule(){
+      document.getElementById("applicationtrack1").style.display = "none";
+      document.getElementById("intschedule1").style.display = "block";
+      document.getElementById("skilltest1").style.display = "none";
+      document.getElementById("training1").style.display = "none";
+      document.getElementById("aptletter1").style.display = "none";
+      document.getElementById("doc1").style.display = "none";
+    }
+    function skilltest(){
+      document.getElementById("applicationtrack1").style.display = "none";
+      document.getElementById("intschedule1").style.display = "none";
+      document.getElementById("skilltest1").style.display = "block";
+      document.getElementById("training1").style.display = "none";
+      document.getElementById("aptletter1").style.display = "none";
+      document.getElementById("doc1").style.display = "none";
+    }
+    function training(){
+      document.getElementById("applicationtrack1").style.display = "none";
+      document.getElementById("intschedule1").style.display = "none";
+      document.getElementById("skilltest1").style.display = "none";
+      document.getElementById("training1").style.display = "block";
+      document.getElementById("aptletter1").style.display = "none";
+      document.getElementById("doc1").style.display = "none";
+    }
+    function aptletter(){
+      document.getElementById("applicationtrack1").style.display = "none";
+      document.getElementById("intschedule1").style.display = "none";
+      document.getElementById("skilltest1").style.display = "none";
+      document.getElementById("training1").style.display = "none";
+      document.getElementById("aptletter1").style.display = "block";
+      document.getElementById("doc1").style.display = "none";
+    } 
+    function doc(){
+      document.getElementById("applicationtrack1").style.display = "none";
+      document.getElementById("intschedule1").style.display = "none";
+      document.getElementById("skilltest1").style.display = "none";
+      document.getElementById("training1").style.display = "none";
+      document.getElementById("aptletter1").style.display = "none";
+      document.getElementById("doc1").style.display = "block";
+    }
+// \\\\\\\\\\\\\\\\\\code for skill select application\\\\\\\\\\\\\\\\\\\\
+//   $('.aplselect').on('change', function() {
+//     id = this.value
+//     $.ajax(
+//       {
+//         type:'get',
+//         url:"search",
+//         data:{
+//           id
+//         },
+//         success:function(data){
+//         const [first,...all] = data;
+//         console.log(first);
+//         console.log(apdata);    
+//         }
+//       }
+//     );
+// });
+
+// function showCustomer(str) {
+//   var xhttp;  
+//   if (str == "") {
+//     document.getElementById("sel").innerHTML = "";
+//     return;
+//   }
+//   xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//       document.getElementById("sel").innerHTML = this.responseText;
+//     }
+//   };
+//   xhttp.open("GET", "search/{str}", true);
+//   xhttp.send();
+// }
+
+function mypoint1(e){
+  document.getElementById("demo1").innerHTML = e.value;
+}
+function mypoint2(e){
+  document.getElementById("demo2").innerHTML = e.value;
+}
+function mypoint3(e){
+  document.getElementById("demo3").innerHTML = e.value;
+}
+function mypoint4(e){
+  document.getElementById("demo4").innerHTML = e.value;
+}
+function mypoint5(e){
+  document.getElementById("demo5").innerHTML = e.value;
+}
+function mypoint6(e){
+  document.getElementById("demo6").innerHTML = e.value;
+}
+function mypoint7(e){
+  document.getElementById("demo7").innerHTML = e.value;
+}
+</script>
+{% endblock %}

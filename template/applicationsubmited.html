@@ -1,0 +1,31 @@
+{% extends 'jobseekerhome.html' %}
+
+{% block containt %}
+{% load static %}
+
+<div class="container  my-5">
+    <img class="" src="{% static 'img/submit.png' %}" alt="submit success" width="200" height="200px">
+    <h1>Submission Successful</h1>
+    <p>Thanks you for submitting your your application.</p>
+    <br>
+    <br>
+    <div class="container">
+        <h1 class="text-center">Application</h1><br>
+        {% for u in uploaddoc %}
+        <h5>Application ID:</h5><p>{{u.j_id}}</p>
+        <h5>Photo:</h5><img src="{{u.photo}}" alt="" srcset="" width="200px">
+        <h5>signature:</h5><img src="{{u.signature}}" alt="" srcset="" width="200px"><br>
+        {% endfor %}
+        
+        {% for u in pdet %}
+        <h5>User Name:</h5><p>{{u.userName}}</p>
+        <h5>First Name:</h5><p>{{u.first_name}}</p>
+        <h5>Last Name:</h5><p>{{u.last_name}}</p><br>
+        {% endfor %}
+        
+        
+        
+    </div>
+</div>
+
+{% endblock %}
