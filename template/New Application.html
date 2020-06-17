@@ -19,7 +19,7 @@
 
 
 <div class="container pt-5">
-<form action="http://127.0.0.1:8000/createApplication" method="post" enctype="multipart/form-data" onload="onMe()">{%csrf_token%}
+<form action="http://127.0.0.1:8000/createApplication" method="post" enctype="multipart/form-data">{%csrf_token%}
 <table class="table pt-2 table-responsive-xl table-bordered">
     
    <thead class="thead-light">
@@ -136,7 +136,7 @@
 </tr>
 <tr>
 <td>Experience:</td>
-<td><select class="form-control-sm" id="experience" name="experience" onchange="select()">
+<td><select class="form-control-sm" id="experience" name="experience">
    <option>Select</option>
    <option>Yes</option>
  <option>No</option>
@@ -150,19 +150,19 @@
 </thead>
 <tr>
    <td>Months Of Experience:</td> 
-   <td><input type="text" class="form-control-sm" id="moe" name="monthsOfExperience" placeholder="Months Of Experience" ></td>
+   <td><input type="text" class="form-control-sm" id="moe" name="monthsOfExperience" value="0" placeholder="Months Of Experience" ></td>
 </tr>
 <tr>
    <td>Company:</td> 
-   <td><input type="text" class="form-control-sm" name="Company" id="comp" placeholder="Company" ></td>
+   <td><input type="text" class="form-control-sm" name="Company" id="comp" value="NA" placeholder="Company" ></td>
 </tr>
 <tr>
    <td>Designation:</td> 
-   <td><input type="text" class="form-control-sm" name="designation" id="desig" placeholder="Designation"></td>
+   <td><input type="text" class="form-control-sm" name="designation" value="NA" id="desig" placeholder="Designation"></td>
 </tr>
 <tr>
    <td>Reason to leave previous job:</td> 
-   <td><textarea class="form-control-sm" name="leave" id="roflpj" rows="4" cols="50" placeholder="write reason in max 100 words."></textarea></td>
+   <td><textarea class="form-control-sm" name="leave" id="roflpj" rows="4" cols="50" placeholder="write reason in max 50 words."></textarea></td>
 </tr>
 <thead class="thead-light">
    <tr>
@@ -232,35 +232,7 @@
 
       });
    });
-
-   function onMe()
-  {
-
-    document.getElementById("moe").style.disabled;
-    document.getElementById("comp").style.display = "none";
-    document.getElementById("desig").style.display = "none";
-    document.getElementById("roflpj").style.display = "none";
-  }
-
-//   for Experience details
-   function select(){
-    var x = document.getElementById("experience").value;
-     if(x == 'Yes')
-      {
-         
-         document.getElementById("moe").style.display = "block";
-         document.getElementById("comp").style.display = "block";
-         document.getElementById("desig").style.display = "block";
-         document.getElementById("roflpj").style.display = "block";
-      }
-     else{
-         
-         document.getElementById("moe").style.display = "none";
-         document.getElementById("comp").style.display = "none";
-         document.getElementById("desig").style.display = "none";
-          document.getElementById("roflpj").style.display = "none";
-      }
-   }   
+  
 </script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

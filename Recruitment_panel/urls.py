@@ -46,16 +46,19 @@ urlpatterns = [
     path('report',views.report),
     path('dashboard',views.dashboard),
     path('allapplicatins',views.allapplicatins),
-    path('appointmentletter',views.appointmentletter),
     path('interviewAnalysis',views.interviewAnalysis),
-    path('tLetter',views.tLetter),
     path('schedule',views.schedule),
     path('scheduleDelete',views.scheduleDelete),
     path('ApplicationForm/<int:application_id>',views.viewForm),
     path('addpost',views.addpost),
     path('postdelete/<str:post_name>',views.postdelete),
+    path('livepdelete/<int:id>',views.livepdelete),
+    path('addnotic',views.addnotic),
     path('notice',views.noticeShow),
-    path('insertpoints',views.insertpoints)
+    path('insertpoints',views.insertpoints),
+    path('noticeDelete',views.noticeDelete),
+    path('alctri',views.alctri)
+    # path('totalanapoint/<int:j_id>',views.totalanapoint)
     # path('search',views.search, name='search')
 ] 
 if settings.DEBUG:

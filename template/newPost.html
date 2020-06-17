@@ -65,12 +65,14 @@
                     <th>POST</th>
                     <th>VACANCIES</th>
                     <th>DESCRIPTION</th>
+                    <th>Action</th>
                 </tr>
                 {% for x in livepost %}
                 <tr>
                     <td>{{x.post_name}}</td>
                     <td>{{x.vacancies}}</td>
                     <td>{{x.post_description}}</td>
+                    <td><a href="http://127.0.0.1:8000/livepdelete/{{x.id}}" class="btn btn-danger btn-sm" role="button" aria-disabled="true"><i class="fa fa-trash"></i></td>
                 </tr>
                  {% endfor %}
             </table>
@@ -79,7 +81,7 @@
             <h1>Avalaible Posts</h1>
             <table class="table table-dark table-sm">
                 
-                    <form class="form" action="addpost" method="post" role="form" autocomplete="off">
+                    <form class="form" action="http://127.0.0.1:8000/addpost" method="post" role="form" autocomplete="off">
                       {% csrf_token %}
                         <tbody>
                             <tr><td><input type="text" name="postName" placeholder="Post"/></td>
@@ -88,9 +90,11 @@
                     </form>
         
                 {% for i in posts %}
-                <tr><td>{{i.post_name}}</td><td>
-                    <a href="http://127.0.0.1:8000/postdelete/{{i.post_name}}" class="btn btn-danger btn-sm" role="button" aria-disabled="true">Delete
-                </td></tr>
+                <tr><td>{{i.post_name}}</td>
+                    <td>
+                        <a href="http://127.0.0.1:8000/postdelete/{{i.post_name}}" class="btn btn-danger btn-sm" role="button" aria-disabled="true"><i class="fa fa-trash"></i>
+                    </td>
+                </tr>
                 {% endfor%}
             </table>
         </div>

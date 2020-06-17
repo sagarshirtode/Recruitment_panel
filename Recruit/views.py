@@ -14,7 +14,7 @@ from django.db import connection
 
 from django.db.models import Count
 from datetime import date
-from Recruit.models import jobseeker_registration,jobseeker_p_details,jobseeker_a_details,posts ,notice, application_hit,document_details,recruit_experience,progress_report,ischedule,analysis_point
+from Recruit.models import jobseeker_registration,jobseeker_p_details,jobseeker_a_details,posts ,notice, application_hit,document_details,recruit_experience,progress_report,ischedule,analysis_point,training_table
 from pymsgbox import *
 import random
 #||||||||||||||||||||||||||||||||||||||||||||||||||JOBSEEKER START|||||||||||||||||||||||||||||||||||||||||||||
@@ -203,6 +203,13 @@ def createApplication(request):
             pdet = jobseeker_p_details.objects.all()
     return render(request, 'applicationsubmited.html', {'uploaddoc':applicationview, 'pdet':pdet})
 
+
+def noticeShow(request):
+    rowcont = 0
+    apl2 = showSchedule(request)
+    apl3 = showNotic(request)
+    return render(request,'Notice.html',{'apl2':apl2,'apl3':apl3,'noticecount':rowcount(request)})
+
 def about(request):
     if request.session['userName']:
         uname = request.session['userName']
@@ -217,21 +224,36 @@ def logout(request):
         return render(request, 'index.html')
     else:
         return render(request,'Reuirment.html')
+# /////////////////////////////////////////////////////////////////////////////Notice count method
+def rowcount(request):
+    rowcont = 0
+    apl3 = notice.objects.all()
+    for i in apl3:
+        rowcont = rowcont+ 1
+    print(rowcont)
+    return rowcont
 
 # ||||||||||||||||||||||||||||||||||||JOBSEEKER END|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 # ||||||||||||||||||||||||||||||||||||ADMIN START||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-# NAVIGATION
+# ///////////////////////////////////////////////////////////////////////////////////////////////NAVIGATION
 def adminHome(request):#NAV
     return render(request, 'adminHome.html')
 
-def interviewAnalysis(request):
-    apl = application_hit.objects.all()
-    postsdata = posts.objects.all()
-    docs = finddoc(request)
-    return render(request, 'InterviewAnalysis.html',{'apl':apl,'posts':postsdata,'docs':docs})
+def ad007(request): #ADMIN REGISTRATION PAGE
+    return render(request, 'adminRegistraion.html')
 
+def report(request):
+    return render(request, 'Reports.html')
+
+def dashboard(request):
+    return render(request, 'Dashboard.html')
+
+def allapplicatins(request):
+    post = application_hit.objects.all()
+    return render(request,'allapplications.html',{'post':post})
+# //////////////////////////////////////////////////////////////////////////////////////////////New Post Related
 def newPost(request):#NAV
     r=random.randint(1,10000)
     postsdata = posts.objects.all()
@@ -257,11 +279,13 @@ def postdelete(request,post_name):
     livepost = requirement_statistics.objects.all()
     return render(request, 'newPost.html',{'id':r,'posts':postsdata,'livepost':livepost})
 
-def ad007(request): #ADMIN REGISTRATION PAGE
-    return render(request, 'adminRegistraion.html')
-
-def report(request):
-    return render(request, 'Reports.html')
+def livepdelete(request,id):
+    delpost = requirement_statistics.objects.get(id =id)
+    delpost.delete()
+    r=random.randint(1,10000)
+    postsdata = posts.objects.all()
+    livepost = requirement_statistics.objects.all()
+    return render(request, 'newPost.html',{'id':r,'posts':postsdata,'livepost':livepost})
 
 # INSERT POST INFORMATION DATABASE
 def postinput(request): 
@@ -280,39 +304,7 @@ def postinput(request):
                 postsdata = posts.objects.all()
     return render(request, 'newPost.html', {'msg':"Successfully inserted!",'livepost':livepost,'posts':postsdata,'id':r})
 
-# Dashboard for analysis jobseeker data
-def dashboard(request):
-    return render(request, 'Dashboard.html')
-
-def allapplicatins(request):
-    post = application_hit.objects.all()
-    return render(request,'allapplications.html',{'post':post})
-
-def schedule(request):
-    if request.method == "POST":
-                post1 = request.POST['postName']
-                idate = request.POST['idate']
-                sDate = request.POST['sdate']
-                eDate = request.POST['edate']
-                p = ischedule( post1,idate,sDate,eDate)
-                p.save()
-    apl = application_hit.objects.all()
-    apl2 = ischedule.objects.all()
-    cursor = connection.cursor()
-    cursor.execute("select distinct post_name from requirement_statistics")
-    for row in cursor:
-        print(row[0])
-    postsdata = posts.objects.all()
-    return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'emp2':cursor,'posts':postsdata})
-
-def scheduleDelete(request):
-    apl = application_hit.objects.all()
-    apl2 = ischedule.objects.all().delete()
-    emp2 = requirement_statistics.objects.raw('SELECT DISTINCT id,post_name FROM requirement_statistics')
-    return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'emp2':emp2})
-
 def viewForm(request, application_id):
-    print(application_id)
     p_d = jobseeker_p_details.objects.get(j_id = application_id)
     c_d = jobseeker_registration.objects.get(userName = p_d.userName)
     a_d = jobseeker_a_details.objects.get(j_id = application_id)
@@ -320,20 +312,70 @@ def viewForm(request, application_id):
     ex_d = recruit_experience.objects.get(j_id = application_id)
     return render(request,'ApplicationForm.html',{'p_d':p_d,'a_d':a_d,'h_d':h_d,'ex_d':ex_d,'c_d':c_d})
 
-def tLetter(request):
-    return render(request,'TrainingLetter.html')
+# ////////////////////////////////////////////////////////////////////////////////Real Function of InterviewAnalysis
+def interviewAnalysis(request):
+    apl = showApplicationhit(request)
+    apl2 = showSchedule(request)
+    apl3 = showNotic(request)
+    postsdata = showPostData(request)
+    docs = finddoc(request)        
+    trinfo = findtrainginfo(request)
+    # tp = totalanapoint(request,1502)
+    return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
 
-def appointmentletter(request):
-    return render(request, 'appointmentletter.html')
+def schedule(request):
+    if request.method == "POST":
+        post1 = request.POST['postName']
+        idate = request.POST['idate']
+        sDate = request.POST['sdate']
+        eDate = request.POST['edate']
+        p = ischedule( post1,idate,sDate,eDate)
+        p.save()
+        apl = showApplicationhit(request)
+        apl2 = showSchedule(request)
+        apl3 = showNotic(request)
+        postsdata = showPostData(request)
+        docs = finddoc(request)        
+        trinfo = findtrainginfo(request)
+        return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
 
-def noticeShow(request):
-    rowcont = 0
-    apl2 = ischedule.objects.all()
-    apl3 = notice.objects.all()
-    # for i in apl3:
-    #     rowcont = rowcont+ 1
-    # print(rowcont)
-    return render(request,'Notice.html',{'apl2':apl2,'apl3':apl3,'noticecount':rowcount(request)})
+def scheduleDelete(request):
+    apl2 = ischedule.objects.all().delete()
+
+    apl = showApplicationhit(request)
+    postsdata = showPostData(request)
+    apl2 = showSchedule(request)
+    apl3 = showNotic(request)
+    docs = finddoc(request)
+    trinfo = findtrainginfo(request)
+    return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
+
+def noticeDelete(request):
+    apl3 = notice.objects.all().delete()
+
+    apl = showApplicationhit(request)
+    postsdata = showPostData(request)
+    apl2 = showSchedule(request)
+    apl3 = showNotic(request)
+    docs = finddoc(request)        
+    trinfo = findtrainginfo(request)
+    return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
+
+def addnotic(request):
+    if request.method == "POST":
+        notice_head = request.POST['head']
+        notice_data = request.POST['body']
+        ndate = date.today()
+        p = notice(notice_head,notice_data,ndate)
+        p.save()
+        apl = showApplicationhit(request)
+        postsdata = showPostData(request)
+        apl2 = showSchedule(request)
+        apl3 = showNotic(request)
+        docs = finddoc(request)        
+        trinfo = findtrainginfo(request)
+        return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
+
 def insertpoints(request):
     if request.method == "POST":
         apl_id = request.POST['apl_id']
@@ -346,16 +388,71 @@ def insertpoints(request):
         tapoint = request.POST['tapoint']
         p = analysis_point(apl_id,crange,prange,mrange,irange,krange,sjrange,tapoint)
         p.save()
-        return render(request,'InterviewAnalysis.html')
+        # tp = totalanapoint(request)
+        apl = showApplicationhit(request)
+        postsdata = showPostData(request)
+        apl2 = showSchedule(request)
+        apl3 = showNotic(request)
+        docs = finddoc(request)       
+        trinfo = findtrainginfo(request)
+        return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
 
-def rowcount(request):
-    rowcont = 0
+def alctri(request):
+    if request.method == "POST":
+        j_id = request.POST['apl_id']
+        type_of_training= request.POST['typeoftri']
+        branch= request.POST['branch']
+        department= request.POST['dept']
+        training_period= request.POST['daysoftri']
+        start_training= request.POST['sdate']
+        end_training= request.POST['edate']
+        t_analysis_point= request.POST['anapoint']
+        feedback= request.POST['Feedback']
+        p =training_table(j_id,type_of_training,branch,department,training_period,start_training,end_training,t_analysis_point,feedback)
+        p.save()
+
+        apl = showApplicationhit(request)
+        postsdata = showPostData(request)
+        apl2 = showSchedule(request)
+        apl3 = showNotic(request)
+        docs = finddoc(request)
+        trinfo = findtrainginfo(request)
+        return render(request, 'InterviewAnalysis.html',{'apl':apl,'apl2':apl2,'apl3':apl3,'posts':postsdata,'docs':docs,'trinfo':trinfo})
+
+    # docs1 = finddoc(request)
+    # return render(request, 'Resume.html',{'docs1':docs1})
+
+# ///////////////////////////////////////////////////////////////////////////////////////Smooth Function
+def showApplicationhit(request):
+    apl = application_hit.objects.all()
+    return apl
+
+def showPostData(request):
+     postsdata = posts.objects.all()
+     return postsdata
+
+def showSchedule(request):
+    apl2 = ischedule.objects.all()
+    return apl2
+
+def showNotic(request):
     apl3 = notice.objects.all()
-    for i in apl3:
-        rowcont = rowcont+ 1
-    print(rowcont)
-    return rowcont
+    return apl3
 
 def finddoc(request):
     docs = document_details.objects.all()
     return docs
+def findtrainginfo(request):
+    trinfo = training_table.objects.all()
+    return trinfo
+
+# def totalanapoint(request,number):
+#     # tap = analysis_point.objects.all()
+#     print(number)
+#     tap = analysis_point.objects.raw('SELECT j_id, (communication + personality) as total FROM analysis_point WHERE j_id = {number}')
+#     newtab = 0
+#     for i in tap:
+#         print(i.total)
+#     print(newtab)
+#     return newtab
+        

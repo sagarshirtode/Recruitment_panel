@@ -31,12 +31,11 @@
         position: absolute;
         height: auto;
         margin-top: 5px;
-        /* overflow: scroll; */
         width: 98%;
         background-color:tan;
         border-radius: 5px;
     }
-
+    
     #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -71,13 +70,13 @@
     }
     
     td, th {
-      border: 1px solid black;
+      border: 1px solid gray;
       text-align: left;
       padding: 1px;
     }
     
     tr:nth-child(even) {
-      background-color: #dddddd;
+      /* background-color: #dddddd; */
     }
   .reporthead{
     height: auto;
@@ -85,19 +84,22 @@
   .schedulehead{
     display: flex;
     flex-direction: row;
-    justify-content:space-around;
+    justify-content:start;
+    padding-left: 50px;
+    margin-top: 10px;
   }
+ 
 </style>
 
 <!-- <h1 class="text-center">Analise Application</h1> -->
 
-<div class="container-fluid reporthead" onload="applicationtrack()">
+<div class="container-fluid reporthead" onload="hideextra()">
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a href="#" class="nav-link " onclick="applicationtrack()">Application Track</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link" onclick="intschedule()">Interview Schedule</a>
+      <a href="#" class="nav-link" onclick="intschedule()">Schedule/Notice</a>
     </li>
     <li class="nav-item">
       <a href="#"  class="nav-link" onclick="skilltest()">Interview/Skill Test</a>
@@ -117,162 +119,345 @@
 <div class="container-fluid main2 my-1">
 <!-- #####################DIV1###################### -->
   <div class="sub1" id="applicationtrack1">
-    <h2 class="text-center">All Applications</h2>
-    <table class="table-sm">
-      <tr>
-        <th>Application ID</th>
-        <th>user Name</th>
-        <th>Post</>
-        <th>Date</th>
-        <th>VIEW</th>
-      </tr>
-      {% for x in apl %}
-    <tr>
-      <td>{{x.application_id}}</td>
-      <td>{{x.userName}}</td>
-      <td>{{x.post_name}}</td>
-      <td>{{x.application_date}}</td>
-      <td><a href="http://127.0.0.1:8000/ApplicationForm/{{x.application_id}}" target="_blanck">view Application</a></td>
-    </tr>
-    {% endfor %}
+    <div class="row">
+      <div class="col-sm-6">
+        <h2 class="text-center">All Applications</h2>
+          <table class="table-sm">
+            <tr>
+              <th>Application ID</th>
+              <th>user Name</th>
+              <th>Post</>
+              <th>Date</th>
+              <th>VIEW</th>
+            </tr>
+            {% for x in apl %}
+          <tr>
+            <td>{{x.application_id}}</td>
+            <td>{{x.userName}}</td>
+            <td>{{x.post_name}}</td>
+            <td>{{x.application_date}}</td>
+            <td><a href="http://127.0.0.1:8000/ApplicationForm/{{x.application_id}}" target="_blanck">view Application</a></td>
+          </tr>
+          {% endfor %}
 
-    </table>
+          </table>
+      </div>
+      <div class="col-sm-6">
+            {% for i in docs %}
+              <h1>Resume Download</h1>
+              <table class="w-responsive table">
+                <tr><td>Application ID</td><td>Resume</td><td>Photo</td><td>Signature</td></tr>
+                <tr>
+                  <td>{{i.j_id}}</td>
+                  <td><a href={{i.resume}}>Link for Resume</a></td>
+                  <td><img src={{i.photo}} onclick={{i.photo}} style="width: 50px; height: 50px;"></img></td>
+                  <td><img src={{i.signature}} style="width: 50px; height: 50px;"></img></td>
+                </tr>
+            {% endfor %}
+              </table>
+      </div>
+    </div>
   </div>
 <!-- #####################DIV2###################### -->
   <div class="sub1" id="intschedule1">
-      <div class="container">
+  <div class="row">    
+    <div class="col-6">
         <div class="schedulehead">
-          <h2>Scedule Interview</h2>
-          <button class="btn bg-danger" onclick="window.location.href = 'scheduleDelete';">Schedule Old Delete</button> 
-      </div>
-        <form class="form" action="schedule" method="POST">{%csrf_token%}
+          <h5>Scedule Interview</h5> 
+        </div>
+        <div style="border: none;">
+            <form class="form" action="schedule" method="POST">{%csrf_token%}
+            <table>
+              <tr>
+                <td>Post:</td>
+                <td> <select class="form-control-sm" name="postName">
+                  {% for i in posts %}
+                  <option>{{i.post_name}}</option>
+                  {% endfor%}
+                </td>
+              </tr>
+              <tr> 
+                <td>Interview Date:</td> 
+                <td><input type="date"  class="form-control-sm" name="idate" ></td>
+              </tr>
+              <tr> 
+                <td>Start Date:</td>
+                <td> <input type="date"  class="form-control-sm" name="sdate" ></td>
+              </tr> 
+              <tr>
+                <td>End Date:</td>
+                <td><input type="date"  class="form-control-sm" name="edate" ></td>
+              </tr>
+              <tr>
+                <td><button type="submit" class="btn btn-sm bg-success">Submit</button></td>
+                <td><a href = 'scheduleDelete' class="bg-danger" style="color:black; border-radius: 5px;">Delete Schedule</a></td>
+              </tr>
+            </table>
+            </form>
+        </div>
+        <div>
           <table>
             <tr>
-              <td>Post:</td>
-              <td> <select class="form-control-sm" name="postName">
-                {% for i in posts %}
-                <option>{{i.post_name}}</option>
-                {% endfor%}
-              </td>
+              <th>Post</th>
+              <th>Start Date</th>
+              <th>End Date</>
             </tr>
-             <tr> 
-              <td>Interview Date:</td> 
-              <td><input type="date"  class="form-control-sm" name="idate" ></td>
-            </tr>
-            <tr> 
-              <td>Start Date:</td>
-              <td> <input type="date"  class="form-control-sm" name="sdate" ></td>
-            </tr> 
-            <tr>
-              <td>End Date:</td>
-              <td><input type="date"  class="form-control-sm" name="edate" ></td>
-            </tr>
-            <tr>
-              <td><button type="submit" class="btn bg-success">Submit</button></td>
-              <td></td>
-            </tr>
+            {% for j in apl2 %}
+          <tr>
+            <td>{{j.post}}</td>
+            <td>{{j.startDate}}</td>
+            <td>{{j.endDate}}</td>
+          </tr>
+          {% endfor %}
           </table>
-        </form>
-      </div>
-      <table>
-        <tr>
-          <th>Post</th>
-          <th>Start Date</th>
-          <th>End Date</>
-        </tr>
-        {% for j in apl2 %}
-      <tr>
-        <td>{{j.post}}</td>
-        <td>{{j.startDate}}</td>
-        <td>{{j.endDate}}</td>
-      </tr>
-      {% endfor %}
-  
-      </table>
+        </div>
+    </div>
+      
+    <div class="col-sm-6">
+        <div>
+            <h4>Notice</h4>
+            <table>
+              <form action="http://127.0.0.1:8000/addnotic" method="post">{%csrf_token%}
+                <tr><td><input type="text" name="head" placeholder="Notice Subject"></td></tr> 
+                <tr><td><textarea name="body" placeholder="Describe notice here..." rows="4" cols="50"></textarea><br></td></tr>
+                <tr><td>
+                  <button type="submit">Add Notice</button>
+                  <a href="noticeDelete" class="bg-danger" style="border-radius: 3px; color:black">Delete Notice</a>
+                </td></tr>
+              </form>
+            </table>
+        </div>
+        <table>
+                <tr>
+                  <th>Subject</th>
+                  <th>Body</th>
+                  <th>Date</>
+                </tr>
+                {% for k in apl3 %}
+              <tr>
+                <td>{{k.notice_head}}</td>
+                <td>{{k.notice_data}}</td>
+                <td>{{k.ndate}}</td>
+              </tr>
+              {% endfor %}
+        </table>       
+    </div>
+  </div>
   </div>
 
 <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Div3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-  <div class="sub1 table-responsive" id="skilltest1" style="background-color:tan;">
+  <div class="sub1" id="skilltest1">
     <div class="row">
-        <div class="col-sm-12"><h1 class="text-center">Anaylisis points</h1></div>
-    </div>
-    <form class="form" action="insertpoints" method="POST">{%csrf_token%}
-      <table class="table" style="width:60%; height:400px; margin-left: 100px;">
-        <tr>
-          <td>Application ID:</td>
-          <td> <select class="form-control-sm" name="apl_id">
-            {% for i in apl %}
-            <option>{{i.application_id}}</option>
-            {% endfor%}
-          </td><td>points</td>
-        </tr>
-         <tr> 
-          <td>Communication</td> 
-          <td><input type="range" min="1" max="10" name="crange" onchange="mypoint1(this)"></td><td><p id="demo1">10</p></td>
-        </tr>
-        <tr> 
-          <td>Personality:</td>
-          <td> <input type="range" name="prange" max="10" min="0"  onchange="mypoint2(this)"></td><td><p id="demo2">10</p></td>
-        </tr> 
-        <tr>
-          <td>Mentalability:</td>
-          <td><input type="range" name="mrange" max="10" min="0" value="3" onchange="mypoint3(this)"></td><td><p id="demo3">10</p></td>
-        </tr>
-        <tr>
-          <td>Integrity:</td>
-          <td><input type="range" name="irange" max="10" min="0"  onchange="mypoint4(this)"></td><td><p id="demo4">10</p></td>
-        </tr>
-        <tr>
-          <td>job_knowledge:</td>
-          <td><input type="range" name="krange" max="10" min="0"  onchange="mypoint5(this)"></td><td><p id="demo5">10</p></td>
-        </tr>
-        <tr>
-          <td>situational_judgement:</td>
-          <td><input type="range" name="sjrange" max="10" min="0"  onchange="mypoint6(this)"></td><td><p id="demo6">10</p></td>
-        </tr>
-        <tr>
-          <td>t_analysis_point:</td>
-          <td><input type="range" name="tapoint" max="10" min="0" value="7" onchange="mypoint7(this)"></td><td><p id="demo7">10</p></td>
-        </tr>
-        <tr>
-          <td></td><td></td>
-          <td><button type="submit" class="btn btn-sm bg-success">Submit</button></td>
-        </tr>
-      </table>
-    </form>
+      <div class="col-sm-12"><h1 class="text-center">Anaylisis points</h1></div>
+      <!-- <h1>{{tp}}</h1> -->
+  </div>
+  <form class="form" action="insertpoints" method="POST">{%csrf_token%}
+    <table class="table table-sm" style="width:50%; margin-left: 50px;">
+      <tr>
+        <td>Application ID:</td>
+        <td> <select class="form-control-sm" name="apl_id">
+          {% for i in apl %}
+          <option>{{i.application_id}}</option>
+          {% endfor%}
+        </td><td>points</td>
+      </tr>
+       <tr> 
+        <td>Communication</td> 
+        <td><input type="range" min="1" max="10" name="crange" onchange="mypoint1(this)"></td><td><p id="demo1">10</p></td>
+      </tr>
+      <tr> 
+        <td>Personality:</td>
+        <td> <input type="range" name="prange" max="10" min="0"  onchange="mypoint2(this)"></td><td><p id="demo2">10</p></td>
+      </tr> 
+      <tr>
+        <td>Mentalability:</td>
+        <td><input type="range" name="mrange" max="10" min="0" value="3" onchange="mypoint3(this)"></td><td><p id="demo3">10</p></td>
+      </tr>
+      <tr>
+        <td>Integrity:</td>
+        <td><input type="range" name="irange" max="10" min="0"  onchange="mypoint4(this)"></td><td><p id="demo4">10</p></td>
+      </tr>
+      <tr>
+        <td>job_knowledge:</td>
+        <td><input type="range" name="krange" max="10" min="0"  onchange="mypoint5(this)"></td><td><p id="demo5">10</p></td>
+      </tr>
+      <tr>
+        <td>situational_judgement:</td>
+        <td><input type="range" name="sjrange" max="10" min="0"  onchange="mypoint6(this)"></td><td><p id="demo6">10</p></td>
+      </tr>
+      <tr>
+        <td>t_analysis_point:</td>
+        <td><input type="range" name="tapoint" max="10" min="0" value="7" onchange="mypoint7(this)"></td><td><p id="demo7">10</p></td>
+      </tr>
+      <tr>
+        <td></td><td></td>
+        <td><button type="submit" class="btn btn-sm btn-default">Submit</button></td>
+      </tr>
+    </table>
+
+  </form>
+
   </div>
 
 <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Document Check\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
   <div class="sub1 " id="doc1">
-   {% for i in docs %}
-      <h1>i.j_id</h1>
-   {% endfor %}
+    <div class="container" style="background-color:ghostwhite; margin-top: 5px;">
+      <h1>Document Anaylisis</h1>
+        {% for i in docs %}
+              <!-- <h1>Resume Download</h1> -->
+              <table class="w-responsive table">
+                <tr><td>Application ID</td><td>Resume</td><td>Photo</td><td>Signature</td><td>Aadhar</td></tr>
+                <tr>
+                  <td>{{i.j_id}}</td>
+                  <td><a href={{i.resume}}>Link for Resume</a></td>
+                  <td><img src={{i.photo}} onclick={{i.photo}} style="width: 200px; height: 200px;"></img></td>
+                  <td><img src={{i.signature}} style="width: 200px; height: 200px;"></img></td>
+                  <td><img src={{i.aadhar}} style="width: 200px; height: 200px;"></img></td>
+                </tr>
+              </table>
+        {% endfor %}
+              
+    </div>
   </div>
 <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\training\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-  <div class="sub1 " id="training1">training1
-    <h1>Training</h1>
+  <div class="sub1 " id="training1">
+    <style>
+        .colone{
+          width: 30%;
+          height: 50%;
+          background-color:tan;
+          border: 1px solid black;
+          border-radius: 5px;
+        }
+    </style>
+    <div class="sub1 row">
+        <div class="col-6 colone table-responsive">
+          <h1 class="text-center">Training Allocation</h1><br>
+          <table class="table table-sm">
+              <form action="http://127.0.0.1:8000/alctri" method="post">{%csrf_token%}
+                <tr>
+                  <td>Application ID:</td>
+                  <td> <select class="form-control-sm" name="apl_id">
+                    {% for i in apl %}
+                    <option>{{i.application_id}}</option>
+                    {% endfor%}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Type of Training</td>
+                  <td>
+                    <select class="form-control-sm" name="typeoftri">
+                      <option>On Field training</option>
+                      <option>paper Work</option>
+                      <option>1 week oral</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>branch</td>
+                  <td>
+                    <select class="form-control-sm" name="branch">
+                      <option>Swarget</option>
+                      <option>Shivajinagar</option>
+                      <option>Viman Nagar</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>department</td>
+                  <td>
+                    <select class="form-control-sm" name="dept">
+                      <option>Sales</option>
+                      <option>Insurance</option>
+                      <option>Customer assistance</option>
+                      <option>services</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Training Period</td>
+                  <td><input type="number" class="form-control-sm" name="daysoftri" placeholder="Day of training" ></td>
+                </tr>
+                <tr>
+                  <td>Start Training</td>
+                  <td><input type="date" name="sdate" class="form-control-sm"></td>
+                </tr>
+                <tr>
+                  <td>End Training</td>
+                  <td><input type="date" name="edate" class="form-control-sm"></td>
+                </tr>
+                <tr>
+                  <td>Analysis Point</td>
+                  <td><input type="number" class="form-control-sm" name="anapoint" placeholder="analysis point"></td>
+                </tr>
+                <tr>
+                  <td>Feedback</td>
+                  <td><textarea type="text"  name="Feedback" class="form-control-lg" placeholder="Feedback" ></textarea></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button type="submit" class="form-control-sm">Submit</button></td>
+                </tr>
+              </form>
+          </table>
+
+        </div>
+        <!-- ///////////////////////////////////////////// -->
+        <div class="col-6 colone table-responsive">
+          <h1 class="text-center">Training Letter</h1>
+          <table class="table table-info" style="font-size: smaller;text-align: left;">
+              <tr>
+                <td>Application ID</td>
+                <td>Type of Training</td>
+                <td>Branch</td>
+                <td>Department</td>
+                <td>Training Period(Days)</td>
+                <td>Start Training</td>
+                <td>End Training</td>
+                <td>Analysis point</td>
+                <td>Feedback</td>
+            </tr>
+            <tr>
+              {% for i in trinfo %}
+              <td>{{i.j_id}}</td>
+              <td>{{i.type_of_training}}</td>
+              <td>{{i.branch}}</td>
+              <td>{{i.department}}</td>
+              <td>{{i.training_period}}</td>
+              <td>{{i.start_training}}</td>
+              <td>{{i.end_training}}</td>
+              <td>{{i.t_analysis_point}}</td>
+              <td>{{i.feedback}}</td>
+              {% endfor%}
+            </tr>
+          </table>
+        </div>
+    </div>
   </div>
-<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\Div5\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\Div5\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
   <div class="sub1" id="aptletter1">
       <style>
         .letter{
             width: 75%;
             margin-left: 15%;
+            font-size: smaller;
+            white-space: normal;
+            font-family: Arial, Helvetica, sans-serif;
+            border: 1px solid black;
         }
     </style>
     
     <div class="letter">
     <br>
     <h1 class="" style="margin-left: 150px;">Appointment Letter</h1><br>
-    TO<br><br>
-    {Employee Name}<br><br>
-    {Address 1}<br><br>
-    {Address 2}<br><br>
-    Dear {Employee Name}<br><br>
+    TO<br>
+    {Employee Name}<br>
+    {Address 1}<br>
+    {Address 2}<br>
+    Dear {Employee Name}<br>
     I am writing this letter to thank you for considering me appropriate for the job position of<br>
     {Position Name} in Aero Honda sales and services Swargate.I am fortunate enough to get a job offer in your<br>
-    company and eager to work and improve with your organization in the coming years.<br><br>
-    
+    company and eager to work and improve with your organization in the coming years.<br>
     As it was discussed during interview my yearly salary will be {salary} with other allowances. <br>
     There will be a training of {Training Day} days at my joining so that I get to know the work procedure and<br>
     other system operations of the organization.I will be able to join your group on {Jion Date}.<br>
@@ -280,9 +465,9 @@
     I am hopeful to make sincere contribution to your company in future and assure you to work to<br>
      the best of my capabilities. Thank you once again for showing confidence in me and <br>
     considering me eligible enough for the position.<br><br>
-    Yours sincerely,<br><br>
-    {HR name}.<br><br>
-    <button class="btn bg-success" onclick="window.print()">Print</button>
+    Yours sincerely,<br>
+    {HR name}.<br>
+    <button class="btn btn-sm bg-success" onclick="window.print()">Print</button>
     </div>
   </div>
 </div>
@@ -290,6 +475,9 @@
 
 
 <script>
+    function hideextra(){
+      document.getElementById("training1").style.display = "none";
+    }
     function applicationtrack(){
       document.getElementById("applicationtrack1").style.display = "block";
       document.getElementById("intschedule1").style.display = "none";
